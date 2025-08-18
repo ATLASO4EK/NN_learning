@@ -6,4 +6,4 @@ from tqdm import tqdm
 
 from src.models.model_classes.VAE import *
 
-model = VAE.VAEMNIST()
+model = VAEMNIST()
