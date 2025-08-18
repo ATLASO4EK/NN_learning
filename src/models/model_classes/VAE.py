@@ -3,7 +3,7 @@ import torch.nn as nn
 
 class VAEMNIST(nn.Module):
     def __init__(self, in_dim:int, out_dim:int, hid_dim:int):
-        super.__init__()
+        super().__init__()
         self.hid_dim = hid_dim
 
         self.encoder = nn.Sequential(
