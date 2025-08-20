@@ -5,10 +5,10 @@ class GAN_gen(nn.Module):
         super().__init__()
 
         self.emb = nn.Sequential(
-            nn.Linear(2, 512*7*7),
+            nn.Linear(2, 512 * 7 * 7, bias=False),
             nn.ELU(inplace=True),
-            nn.BatchNorm1d(512*7*7),
-            nn.Unflatten(1, (512, 7, 7))
+            nn.BatchNorm1d(512 * 7 * 7),
+            nn.Unflatten(1, (512, 7, 7)),
         )
 
         self.conv = nn.Sequential(
@@ -38,7 +38,7 @@ class GAN_gen(nn.Module):
         embeded = self.emb(x)
         out_conv = self.conv(embeded)
         out_transpose = self.transpose(out_conv)
-        out = self.conv(out_transpose)
+        out = self.out_conv(out_transpose)
 
         return out
 

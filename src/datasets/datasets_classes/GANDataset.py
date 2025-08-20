@@ -10,7 +10,7 @@ class GANDatasetMNIST(data.Dataset):
         self.target = torch.tensor([target], dtype=torch.float32)
 
         if transform:
-            self.dataset = transform(self.dataset).view(-1,1,28,28)
+            self.dataset = transform(self.dataset).view(-1, 1, 28, 28)
 
     def __getitem__(self, item):
         return self.dataset[item], self.target

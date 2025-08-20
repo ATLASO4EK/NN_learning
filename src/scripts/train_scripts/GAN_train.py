@@ -21,7 +21,7 @@ batch_size = 16
 transforms = tfs.Compose(
     [
         tfs.ToImage(),
-        tfs.ToDtype(dtype=torch.flloat32, scale=True)
+        tfs.ToDtype(dtype=torch.float32, scale=True)
     ]
 )
 
