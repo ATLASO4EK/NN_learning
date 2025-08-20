@@ -66,4 +66,37 @@ for epoch in range(epochs):
         optimizer_gen.step()
 
         # discriminator learning
-        
+        img_gen = model_gen(h)
+        fake_out = model_dis(img_gen)
+        real_out = model_dis(x)
+
+        outputs = torch.cat([real_out, fake_out], dim=0).to(device)
+        targets = torch.cat([targets_1, targets_0], dim=0).to(device)
+
+        loss_dis = loss_func(outputs, targets)
+
+        optimizer_dis.zero_grad()
+        loss_dis.backward()
+        optimizer_dis.step()
+
+        lm_count += 1
+        loss_mean_gen = 1/lm_count * loss_gen.item() + (1 - 1/lm_count) * loss_mean_gen
+        loss_mean_dis = 1/lm_count * loss_dis.item() + (1 - 1/lm_count) * loss_mean_dis
+
+        train_tqdm.set_description(f"Epoch [{epoch+1}/{epochs}], loss_mean_gen={loss_mean_gen:.3f}, loss_mean_dis={loss_mean_dis:.3f}")
+
+    loss_gen_lst.append(loss_mean_gen)
+    loss_dis_lst.append(loss_mean_dis)
+
+import os
+os.chdir('D:/pythonic-shit/NN_learning/src/models/model_saves/GAN')
+
+st = model_gen.to('cpu').state_dict()
+torch.save(st, 'model_gen.tar')
+
+st = model_dis.to('cpu').state_dict()
+torch.save(st, 'model_dis.tar')
+
+st = {'loss_gen': loss_gen_lst, 'loss_dis': loss_dis_lst}
+torch.save(st, 'model_gan_losses.tar')
+
