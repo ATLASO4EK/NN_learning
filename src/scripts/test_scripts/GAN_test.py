@@ -6,8 +6,8 @@ from src.models.model_classes.GAN import GAN_gen
 os.chdir('D:/pythonic-shit/NN_learning/src/models/model_saves/GAN')
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-model_gen = GAN_gen
-model_gen = model_gen.load_state_dict(torch.load('model_gen.tar'))
+model_gen = GAN_gen()
+model_gen.load_state_dict(state_dict=torch.load('model_gen.tar'))
 model_gen.to(device)
 
 model_gen.eval()
